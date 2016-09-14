@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../HelloPython/.idea/HelloPython.iml" filepath="$PROJECT_DIR$/../HelloPython/.idea/HelloPython.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MachineLearning.iml" filepath="$PROJECT_DIR$/.idea/MachineLearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MyWeb/.idea/MyWeb.iml" filepath="$PROJECT_DIR$/../MyWeb/.idea/MyWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../flaskDemo/.idea/flaskDemo.iml" filepath="$PROJECT_DIR$/../flaskDemo/.idea/flaskDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../untitled/.idea/untitled.iml" filepath="$PROJECT_DIR$/../untitled/.idea/untitled.iml" />
+    </modules>
+  </component>
+</project>
