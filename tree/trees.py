@@ -145,14 +145,6 @@ def classify(inputTree, featLabels, inputVec):
                 classLabel = secondDict[key]
     return classLabel
 
-
-
-
-
-
-
-
-
 def createDataSet():
     dataSet = [
         [1, 1, 'yes'],

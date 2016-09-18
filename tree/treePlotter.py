@@ -84,10 +84,10 @@ def createPlot(inTree):
     plt.show()
 
 if __name__ == '__main__':
-   # createPlot()
+   #createPlot()
 
    dataSet, labels = trees.createDataSet()
    myTree = trees.createTree(dataSet, labels)
-   # myTree['no surfacing'][2] = 'maybe'
+   #myTree['no surfacing'][2] = 'maybe'
    print myTree
    createPlot(myTree)
