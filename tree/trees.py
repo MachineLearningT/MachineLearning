@@ -36,6 +36,7 @@ def splitDateSet(dataSet, axis, value):
     retDataSet = []  #创建新的数据集对象
     for featVec in dataSet:
         if featVec[axis] == value:
+            # 抽取除指定特征外的其他集合数据，重新组成一个新的数据集
             reduceFeatVec = featVec[:axis]
             reduceFeatVecAfter = featVec[axis+1:]
             reduceFeatVec.extend(reduceFeatVecAfter)
@@ -81,7 +82,8 @@ def chooseBestFeatureToSplit(dataSet):
 
 def majorityCnt(classList):
     """
-    遍历完所有特征时返回出现次数最多的
+    遍历完所有类标签返回出现次数最多的分类名称
+    例如：使用完所有的标签，任然不能划分唯一类型的分组 --￥ [['yes'], ['yes'], ['no']]
     :param classList:
     :return:
     """
@@ -94,7 +96,7 @@ def majorityCnt(classList):
 
 
 def createTree(dataSet, labels):
-    print "-- %s" % dataSet
+    print "--￥ %s" % dataSet
     """
     创建数的函数代码
     :param dataSet:
@@ -102,13 +104,15 @@ def createTree(dataSet, labels):
     :return:
     """
     classList = [example[-1] for example in dataSet]
-    # 判断类别完全相同则停止划分
+    # 递归函数的停止条件1 判断类别完全相同则停止划分
     if classList.count(classList[0]) == len(classList):
-        print "#### %s" % classList[0]
+        print "####^ %s" % classList[0]
         return classList[0]
+
+    # 递归函数的停止条件2 使用完所有特征，任然不能将数据集划分成仅包含唯一类别的分组
     if len(dataSet[0]) == 1:
         print "**** %s" % dataSet[0]
-        return majorityCnt(classList)
+        return majorityCnt(classList)  # 挑选出现次数最多的类别做为返回值
 
     bestFeat = chooseBestFeatureToSplit(dataSet)  # 选择最好的划分方式
     bestFeatLabel = labels[bestFeat]
