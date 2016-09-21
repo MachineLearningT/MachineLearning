@@ -35,9 +35,9 @@ def randCent(dataSet, k):
     n = shape(dataSet)[1]  # shape获取矩阵的行列属性
     centroids = mat(zeros((k, n)))
     for j in range(n):
-        minJ = min(dataMat[:, j])
-        rangeJ = float(max(dataMat[:, j]) - minJ)
-        radm = random.rand(k, 1) # 产生k个0到1之间的随机数
+        minJ = min(dataSet[:, j])
+        rangeJ = float(max(dataSet[:, j]) - minJ)
+        radm = random.rand(k, 1)  # 产生k个0到1之间的随机数
         centroids[:, j] = minJ + rangeJ * radm
     return centroids
 
@@ -51,7 +51,7 @@ def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
     :return:
     '''
     m = shape(dataSet)[0]
-    clusterAssment = mat(zeros((m , 2)))
+    clusterAssment = mat(zeros((m, 2)))
     centroids = createCent(dataSet, k)
     print centroids
     clusterChanged = True
@@ -122,9 +122,7 @@ def biKmeans(dataSet, k, distMeas=disEclud):
         centList.append(bestNewCents[1, :])
 
         clusterAssment[nonzero(clusterAssment[:, 0].A == bestCentToSplit)[0], :] = bestClustAss
-
-        print centList
-
+    return centList, clusterAssment
 
 if __name__ == '__main__':
    dataMat = loadDateSet('testSet2.txt')
@@ -143,4 +141,4 @@ if __name__ == '__main__':
 
    #print kMeans(dataMat, 4)
 
-   biKmeans(dataMat, 3)
+   print biKmeans(dataMat, 3)
