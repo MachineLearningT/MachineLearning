@@ -33,11 +33,7 @@ def clusterClubs(numClust=5):
         markerStyle = scatterMarkers[i % len(scatterMarkers)]
         ax1.scatter(ptsInCurrCluster[:, 0].flatten().A[0], ptsInCurrCluster[:, 1].flatten().A[0], marker=markerStyle, s=90)
 
-    newMyC = []
-    for i in range(len(myCentroids)):
-        newMyC.append(myCentroids[i].tolist()[0])
-    newMyC = mat(newMyC)
-    ax1.scatter(newMyC[:, 0].flatten().A[0], newMyC[:, 1].flatten().A[0], marker='+', s=300)
+    ax1.scatter(myCentroids[:, 0].flatten().A[0], myCentroids[:, 1].flatten().A[0], marker='+', s=300)
     plt.show()
 
 if __name__ == "__main__":
