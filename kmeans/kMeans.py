@@ -73,14 +73,17 @@ def datashow(dataSet,k,centroids,clusterAssment):  #二维空间显示聚类结�
 def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
     '''
     k-均值聚类算法
-    :param dataSet:
-    :param k:
-    :param distMeas:
-    :param createCent:
+    :param dataSet: 数据集
+    :param k:簇的数目
+    :param distMeas:计算距离的函数（可选）
+    :param createCent:创建初始质心的函数（可选）
     :return:
     '''
+    # shape获取几行几列的矩阵 返回 (m,n)
     m = shape(dataSet)[0]
+    # 簇分配结果矩阵 有两列[簇索引值，误差] 误差是指当前点到簇质心的距离
     clusterAssment = mat(zeros((m, 2)))
+    # 创建k个簇质心
     centroids = createCent(dataSet, k)
     clusterChanged = True
     while clusterChanged:
@@ -91,20 +94,28 @@ def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
             minDist = inf   # 正无穷大
             minIndex = -1
             for j in range(k):
+                # 计算1个点到每个质心的距离
                 distJI = distMeas(centroids[j, :], dataSet[i, :])
+                # 取出最小的距离的点，和质心的索引
                 if distJI < minDist:
                     minDist = distJI
                     minIndex = j
             if clusterAssment[i, 0] != minIndex:  # while循环两遍，第二遍做校验
                 clusterChanged = True
+            # 存储每个点对应得质心索引和误差
             clusterAssment[i, :] = minIndex, minDist ** 2  # ** 表示乘方
         print 'centroids=', centroids
 
         # 循环质心，更新质心位置
         for cent in range(k):
             # 取出按质心分类的点
+            # print 'clusterAssment[:, 0].A==',clusterAssment[:, 0].A
+            # clusterAssment[:, 0].A== [[ 3.] [ 2.][ 5.] ....]
+            # print 'nonzero(clusterAssment[:, 0].A == cent)==', nonzero(clusterAssment[:, 0].A == cent)
+            # nonzero(clusterAssment[:, 0].A == cent)== (array([ 2, 14, 20, 38, 44, 47, 50, 53, 59]), array([0, 0, 0, 0, 0, 0, 0, 0, 0]))
             ptsInClust = dataSet[nonzero(clusterAssment[:, 0].A == cent)[0]]
-            centroids[cent, :] = mean(ptsInClust, axis=0)  # 按列放心计算平均值
+            # 按列计算平均值
+            centroids[cent, :] = mean(ptsInClust, axis=0)
     return centroids, clusterAssment
 
 
@@ -166,14 +177,14 @@ if __name__ == '__main__':
     print min(dataMat[:, 1])
     print max(dataMat[:, 1])
     '''
-    #print randCent(dataMat, 2)
+    print randCent(dataMat, 2)
 
 
-    #print disEclud(dataMat[0], dataMat[1])
+    print disEclud(dataMat[0], dataMat[1])
 
     # k-均值聚类算法
-    centroids, clusterAssment = kMeans(dataMat, 6)
-    datashow(dataMat, 6, centroids, clusterAssment)
+    # centroids, clusterAssment = kMeans(dataMat, 4)
+    # datashow(dataMat, 4, centroids, clusterAssment)
     # 二分k-均值聚类算法
-    #centroids2, clusterAssment2 = biKmeans(dataMat, 3)
-    #datashow(dataMat, 3, centroids2, clusterAssment2)
+    centroids2, clusterAssment2 = biKmeans(dataMat, 3)
+    datashow(dataMat, 3, centroids2, clusterAssment2)
