@@ -100,7 +100,8 @@ def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
                 if distJI < minDist:
                     minDist = distJI
                     minIndex = j
-            if clusterAssment[i, 0] != minIndex:  # while循环两遍，第二遍做校验
+            # 只要有一个数据所赋值最近质心的索引值，不等于这次计算的最近质心索引值，就更新质心重新计算
+            if clusterAssment[i, 0] != minIndex:
                 clusterChanged = True
             # 存储每个点对应得质心索引和误差
             clusterAssment[i, :] = minIndex, minDist ** 2  # ** 表示乘方
@@ -108,13 +109,24 @@ def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
 
         # 循环质心，更新质心位置
         for cent in range(k):
-            # 取出按质心分类的点
-            # print 'clusterAssment[:, 0].A==',clusterAssment[:, 0].A
-            # clusterAssment[:, 0].A== [[ 3.] [ 2.][ 5.] ....]
-            # print 'nonzero(clusterAssment[:, 0].A == cent)==', nonzero(clusterAssment[:, 0].A == cent)
-            # nonzero(clusterAssment[:, 0].A == cent)== (array([ 2, 14, 20, 38, 44, 47, 50, 53, 59]), array([0, 0, 0, 0, 0, 0, 0, 0, 0]))
+            # 取出按质心分类的点 .A是转成数组
+            # print 'clusterAssment[:, 0].A :',clusterAssment[:, 0].A
+            # clusterAssment[:, 0].A== [[ 3.][ 2.][ 5.] ....]
+
+            # print 'clusterAssment[:, 0].A == cent :', clusterAssment[:, 0].A == cent
+            # clusterAssment[:, 0].A == cent : [[ True][ True][False][ True][ True][ True][ True][ True][False][False]]
+
+            # a = array([[True],[True],[False],[True],[True],[True],[True],[True],[False],[False]])
+            # print nonzero(a)  # 对于多维数组，nonzero返回的为true的行的坐标的数组和列的坐标的数组
+            # (array([0, 1, 3, 4, 5, 6, 7]), array([0, 0, 0, 0, 0, 0, 0]))
+            # b = array([[True, False, True], [True, False, False]])
+            # print nonzero(b)
+            # (array([0, 0, 1]), array([0, 2, 0]))
+
+            # print 'nonzero(clusterAssment[:, 0].A == cent) :', nonzero(clusterAssment[:, 0].A == cent)
+            # nonzero(clusterAssment[:, 0].A == cent) :(array([ 2, 14, 20, 38, 44, 47, 50, 53, 59]), array([0, 0, 0, 0, 0, 0, 0, 0, 0]))
             ptsInClust = dataSet[nonzero(clusterAssment[:, 0].A == cent)[0]]
-            # 按列计算平均值
+            # 按列计算平均值 axis=0表示按列方向计算
             centroids[cent, :] = mean(ptsInClust, axis=0)
     return centroids, clusterAssment
 
@@ -168,6 +180,9 @@ def biKmeans(dataSet, k, distMeas=disEclud):
     return newCentList, clusterAssment
 
 if __name__ == '__main__':
+
+
+
     dataMat = loadDateSet('testSet2.txt')
     '''
     print dataMat
