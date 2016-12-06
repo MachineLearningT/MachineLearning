@@ -134,6 +134,10 @@ def kMeans(dataSet, k, distMeas=disEclud, createCent=randCent):
 def biKmeans(dataSet, k, distMeas=disEclud):
     '''
     二分k-均值聚类算法
+    思想：
+    （1）选取一个质心一分二，质心个数依次从1开始每次增加1到输入的质心个数
+    （2）先划分再计算，选取SSE（SSE=E1+E2...）最小的作为本次的划分方案
+    （3）E1为本族中，每个点到质心的距离的平方和。SSE为所有点到质心的平方和的总和
     :param dataSet:
     :param k:
     :param distMeas:
@@ -198,6 +202,8 @@ if __name__ == '__main__':
     print disEclud(dataMat[0], dataMat[1])
 
     # k-均值聚类算法
+    # 优点：实现简单
+    # 缺点: (1) 受k值的影响较大 (2) 受初始化质心选择的影响，容易形成局部最优 (3) 不适合非凸数据集(非凸:集合任意两点连线在数据集外)
     # centroids, clusterAssment = kMeans(dataMat, 4)
     # datashow(dataMat, 4, centroids, clusterAssment)
     # 二分k-均值聚类算法
