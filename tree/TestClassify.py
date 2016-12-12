@@ -19,19 +19,23 @@ def getDecisionList(myTree):
             decisionList.extend(getDecisionList(secondDict[key]))
     return decisionList
 
-def queryResult(myTree, queryDict):
+def queryResult(myTree, vLabels, queryDict):
+    # 取出按树结构排列的属性名称
     decisionList = getDecisionList(myTree)
+    # 取出按树结构排列的属性值
     queryList = []
     for i in decisionList:
         queryList.append(queryDict[i])
-    return trees.classify(myTree, vLabels, [0, 1])
+    return trees.classify(myTree, decisionList, queryList)
+
 
 if __name__ == '__main__':
     """
     测试决策树的分类函数
     """
     dataSet, labels = trees.createDataSet()
-    vLabels = labels[:]
+    vLabel = labels[:]
+    print 'vLabels:', vLabel
     myTree = trees.createTree(dataSet, labels)
     queryDict = {'flippers': 1, 'no surfacing': 0}
-    print ' query result: %s ' % queryResult(myTree, queryDict)
+    print ' query result: %s ' % queryResult(myTree, vLabel, queryDict)

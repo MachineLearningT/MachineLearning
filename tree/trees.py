@@ -130,8 +130,8 @@ def classify(inputTree, featLabels, inputVec):
     """
     使用决策树的分类函数
     :param inputTree:
-    :param featLabels:
-    :param inputVec:
+    :param featLabels: 原始分类
+    :param inputVec: 查询的属性（按照tree排列）
     :return:
     """
     firstStr = inputTree.keys()[0]
